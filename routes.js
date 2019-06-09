@@ -4,12 +4,10 @@ var userRoutes = require('./users');
 
 const configRouters = (db) => {
   router.get('/', (req, res) => {
-    console.log(db.collection('users').find(), 'aqui campeon');
-    // res.send('REST API. Init');
-    res.json(db.collection('users').find())
+    res.send('REST API.');
   });
   
-  router.use('/users', userRoutes);
+  router.use('/users', userRoutes(db));
 
   return router;
 }
