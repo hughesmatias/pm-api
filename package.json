@@ -4,6 +4,7 @@
   "description": "Api with MongoDB. Manage users and articles",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matias Perez Hughes (hughesmatias@gmail.com)",
@@ -11,5 +12,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.5.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
