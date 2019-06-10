@@ -6,4 +6,4 @@ const userSchema = new Schema({
   avatar: String,
 });
 
-export default mongoose.model('User', userSchema);
+module.exports = userSchema;
