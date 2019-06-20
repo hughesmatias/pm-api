@@ -3,7 +3,7 @@ var router = express.Router();
 const userModel = require('./model');
 
 const userRouters = (db) => {
-  var users = db.model('users', userModel);
+  var users = db.model('user', userModel);
 
   router.get('/', async (req, res) => {
     const usersCollection = await users.find().then(data => data);
