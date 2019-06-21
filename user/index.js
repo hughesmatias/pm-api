@@ -10,7 +10,8 @@ const userRouters = (db) => {
   });
 
   router.post('/', async (req, res) => {
-    const userAdded = await users.insertOne(req.body, (err, result) => result | err);
+    const newUser = new users(req.body);
+    const userAdded = await users.collection.insertOne(newUser, (err, result) => result | err);
     res.json(userAdded);
   });
 
