@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 mongoose.connect('mongodb://root:root123@ds135207.mlab.com:35207/peer-medical', {
   useNewUrlParser: true,
+  useFindAndModify: false,
 }).then(() => {
   mongoose.model('user', userSchema);
   mongoose.model('article', articleSchema);

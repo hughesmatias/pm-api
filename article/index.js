@@ -28,6 +28,13 @@ const articleRouter = db => {
     res.json(articleAdd);
   });
 
+  router.put('/:id', (req, res) => {
+    const articleId = req.params.id;
+    Article.findByIdAndUpdate(articleId, req.body, (() => {
+      res.end("Article was updated.");
+    }));
+  });
+
   return router;
 }
 
