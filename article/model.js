@@ -5,7 +5,7 @@ var articleSchema = new Schema({
   title: String,
   text: String,
   tags: [String],
-  user: { type: Schema.Types.ObjectId, ref: 'user' },
+  userId: { type: Schema.Types.ObjectId, ref: 'user' },
 });
 
 module.exports = articleSchema;
