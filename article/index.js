@@ -40,6 +40,12 @@ const articleRouter = db => {
     }));
   });
 
+  router.get('/withTagsAndUser', async (req, res) => {
+    // user exist and tags size > 0
+    const articles = await Article.find({ userId : { $exists:true }, $where: 'this.tags.length > 0' }).then(data => data);
+    res.json(articles);
+  })
+
   return router;
 }
 
