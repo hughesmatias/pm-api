@@ -28,6 +28,11 @@ const articleRouter = db => {
     res.json(articleAdd);
   });
 
+  router.get('/:id/user', async (req, res) => {
+    const articleById = await Article.find({ _id: req.params.id }).populate('userId').then(data => data);
+    res.json(articleById);
+  })
+
   router.put('/:id', (req, res) => {
     const articleId = req.params.id;
     Article.findByIdAndUpdate(articleId, req.body, (() => {
