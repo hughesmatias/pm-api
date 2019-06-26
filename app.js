@@ -28,7 +28,9 @@ const accessMiddleware = (req, res, next) => {
 app.use(bodyParser.json());
 app.use(accessMiddleware);
 
-mongoose.connect('mongodb://root:root123@ds135207.mlab.com:35207/peer-medical', {
+const mongoDbUrl = process.env.LOCAL_MONGO ? process.env.LOCAL_MONGO : process.env.EXT_MONGO;
+
+mongoose.connect(mongoDbUrl, {
   useNewUrlParser: true,
   useFindAndModify: false,
 }).then(() => {
