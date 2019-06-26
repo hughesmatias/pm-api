@@ -6,6 +6,9 @@ var bodyParser = require('body-parser')
 const userSchema = require('./user/model');
 const articleSchema = require('./article/model');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb://root:root123@ds135207.mlab.com:35207/peer-medical', {
