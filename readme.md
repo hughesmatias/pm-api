@@ -1,4 +1,4 @@
-# PEER MEDICAL API
+# PEER MEDICAL API v.1
 
 ## Use
 
@@ -8,7 +8,7 @@
 npm install
 ```
 
-### Excecute
+### Execute
 
 ```javascript
 npm run dev
@@ -103,6 +103,62 @@ curl -X GET \
   -H 'content-type: application/json'
 ```
 
+#### List articles
+
+**URL** : `/api/article/`
+
+**Method** : `GET`
+
+**Auth required** : YES
+***headers require***
+
+```json
+{
+  "authorization": "5CD4ED173E1C95FE763B753A297D5",
+  "content-type": "application/json",
+  "cache-control": "no-cache",
+}
+```
+
+***Curl***
+
+```curl
+curl -X GET \
+  http://localhost:3000/article \
+  -H 'authorization: 5CD4ED173E1C95FE763B753A297D5' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json'
+```
+
+#### Get article by Id with User
+
+**URL** : `/api/article/:id/user`
+
+**Method** : `GET`
+
+**Parameter** : `id <- Article`
+
+**Auth required** : YES
+***headers require***
+
+```json
+{
+  "authorization": "5CD4ED173E1C95FE763B753A297D5",
+  "content-type": "application/json",
+  "cache-control": "no-cache",
+}
+```
+
+***Curl***
+
+```curl
+curl -X GET \
+  http://localhost:3000/article/5d0e6d98563cdb0f96d4132f/user \
+  -H 'authorization: 5CD4ED173E1C95FE763B753A297D5' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json'
+```
+
 #### Create a new article
 
 **URL** : `/api/article/`
@@ -136,7 +192,7 @@ curl -X POST \
 }'
 ```
 
-- [x] Edit an article
+#### Edit an article
 
 **URL** : `/api/article/:id`
 
@@ -169,9 +225,36 @@ curl -X PUT \
 }'
 ```
 
-- [ ] Delete an article
-- [x] Return all articles (from all users) that contains the given tag(s) (1 or more)
+#### Delete an article
 
+**URL** : `/api/article/:id`
+
+**Method** : `DELETE`
+
+**Parameter** : `id <- Article`
+
+**Token required** : YES
+***headers require***
+
+```json
+{
+  "authorization": "5CD4ED173E1C95FE763B753A297D5",
+  "content-type": "application/json",
+  "cache-control": "no-cache",
+}
+```
+
+***Curl***
+
+```curl
+curl -X DELETE \
+  http://localhost:3000/article/5d0e6d98563cdb0f96d4132f \
+  -H 'authorization: 5CD4ED173E1C95FE763B753A297D5' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json'
+```
+
+#### Return all articles (from all users) that contains the given tag(s) (1 or more)
 
 **URL** : `/api/article/withTagsAndUser`
 
@@ -200,5 +283,4 @@ curl -X GET \
 
 ## Resources
 
-DataBase is in mlab.
-Also it's possible use local database. Set en .env of url mongo db.
+Database is in mlab. Also it's possible use local database. Set en .env of url mongo db. But you will set mongo in local: two ways: docker or mongo as application.
