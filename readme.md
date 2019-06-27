@@ -186,9 +186,24 @@ curl -X POST \
   -H 'content-type: application/json' \
   -d '{
     "title": "The book of Joe",
-    "text": "http://images.google.com/elavatar.jpg",
     "text": "Lorem",
-    "tags": "['History']"
+    "tags": ["History"]
+}'
+```
+
+or
+
+```curl
+curl -X POST \
+  http://localhost:3000/article \
+  -H 'authorization: 5CD4ED173E1C95FE763B753A297D5' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+    "title": "The book of Joe",
+    "text": "Lorem",
+    "tags": ["History"],
+    "userId": "5d142a14708e290a25e8eb2f"
 }'
 ```
 
