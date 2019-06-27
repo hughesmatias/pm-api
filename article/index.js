@@ -37,16 +37,14 @@ const articleRouter = db => {
   });
 
   router.delete('/:id', (req, res) => {
-    Article.findByIdAndRemove(req.params.id, (err, article) => {
-      if (err) res.status(500).end(err);
+    Article.findByIdAndRemove(req.params.id, article => {
       res.status(200).end("Article was deleted.");
     });
   });
 
   router.put('/:id', (req, res) => {
     const articleId = req.params.id;
-    Article.findByIdAndUpdate(articleId, req.body, ((err, article) => {
-      if (err) res.status(500).end(err);
+    Article.findByIdAndUpdate(articleId, req.body, (article => {
       res.status(200).end("Article was updated.");
     }));
   });
