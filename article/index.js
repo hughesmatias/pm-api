@@ -24,19 +24,30 @@ const articleRouter = db => {
       });
     }
 
-    const articleAdd = Article.collection.insertOne(newArticle, (err, result) => result | err);
+    const articleAdd = Article.collection.insertOne(newArticle, (err, result) => {
+      if (err) res.status(500).end(err);
+      return result;
+    });
     res.json(articleAdd);
   });
 
   router.get('/:id/user', async (req, res) => {
     const articleById = await Article.find({ _id: req.params.id }).populate('userId').then(data => data);
     res.json(articleById);
-  })
+  });
+
+  router.delete('/:id', (req, res) => {
+    Article.findByIdAndRemove(req.params.id, (err, article) => {
+      if (err) res.status(500).end(err);
+      res.status(200).end("Article was deleted.");
+    });
+  });
 
   router.put('/:id', (req, res) => {
     const articleId = req.params.id;
-    Article.findByIdAndUpdate(articleId, req.body, (() => {
-      res.end("Article was updated.");
+    Article.findByIdAndUpdate(articleId, req.body, ((err, article) => {
+      if (err) res.status(500).end(err);
+      res.status(200).end("Article was updated.");
     }));
   });
 
