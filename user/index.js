@@ -1,28 +1,32 @@
 var express = require('express');
+const UserService = require('./service');
 var router = express.Router();
 
 const userRouters = (db) => {
-  var User = db.model('user');
+  var User = new UserService(db.model('user'));
 
   router.get('/', async (req, res) => {
-    const usersCollection = await User.find().then(data => data);
+    const usersCollection = await User.findAll();
     res.json(usersCollection);
   });
 
   router.get('/:id', async(req, res) => {
     const userId = req.params.id;
-    User.findOne({ _id: userId }).then(user => {
+    try {
+      const user = await User.findById(userId);
       res.json(user);
-    })
-    .catch(err => {
-      res.end("User not found");
-    })
+    } catch(err) {
+      res.status(500).end(err);
+    }
   })
 
   router.post('/', async (req, res) => {
-    const newUser = new User(req.body);
-    const userAdded = await User.collection.insertOne(newUser, (err, result) => result | err);
-    res.json(userAdded);
+    try {
+      const newUser = await User.save(req.body);
+      res.json(newUser);
+    } catch(err) {
+      res.status(500).end(err);
+    }
   });
 
   return router;
