@@ -5,25 +5,7 @@ const mongoose = require('mongoose');
 var bodyParser = require('body-parser')
 const userSchema = require('./user/model');
 const articleSchema = require('./article/model');
-
-const dotenv = require('dotenv');
-dotenv.config();
-
-const config =  require('./config');
-
-const accessMiddleware = (req, res, next) => {
-  const urlWithoutAuthorization = config.urlWithoutAuthorization.split(',');
-  if (urlWithoutAuthorization.includes(req.originalUrl) || req.originalUrl == '') {
-    return next();
-  }
-  // validate if request header authorization
-  const authotirzationHeader = req.get('Authorization');
-  if (authotirzationHeader != undefined && authotirzationHeader == config.token) {
-    return next();
-  } else {
-    res.end('Error token');
-  }
-}
+const accessMiddleware = require('./middleware');
 
 app.use(bodyParser.json());
 app.use(accessMiddleware);
