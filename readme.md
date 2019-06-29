@@ -14,6 +14,9 @@ npm install
 npm run dev
 ```
 
+### TOKEN
+The application has a .env file where was defined a TOKEN variable. The header of the request will have the key TOKEN and value .env['TOKEN'].
+
 ## Endpoints
 
 #### Create a new user
@@ -298,4 +301,4 @@ curl -X GET \
 
 ## Resources
 
-Database is in mlab. Also it's possible use local database. Set en .env of url mongo db. But you will set mongo in local: two ways: docker or mongo as application.
+Database is in mlab. Also it's possible use local database. Set in .env the mongo db url . But you will set mongo in local: two ways: docker or mongo as application.
