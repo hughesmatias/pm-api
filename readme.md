@@ -302,3 +302,8 @@ curl -X GET \
 ## Resources
 
 Database is in mlab. Also it's possible use local database. Set in .env the mongo db url . But you will set mongo in local: two ways: docker or mongo as application.
+
+Alternative, I created a docker build. This create a container with mongo db. To use that is require to config in .env file a variable:
+copy and paste -> 
+```LOCAL_MONGO=mongodb://localhost:27017/peer-medical```
+And execute ./docker-run.sh
