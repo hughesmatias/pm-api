@@ -1,58 +1,74 @@
 var express = require('express');
+const ArticleService = require('./service');
+const UserService = require('../user/service');
 var router = express.Router();
 
 const articleRouter = db => {
-  const Article = db.model('article');
-  const User = db.model('user');
+  const Article = new ArticleService(db.model('article'));
+  const User = new UserService(db.model('user'));
 
   router.get('/', async (req, res) => {
-    const articleCollect = await Article.find().then(data => data);
+    const articleCollect = await Article.findAll();
     res.json(articleCollect);
   });
 
   router.post('/', async (req, res) => {
-    let newArticle = new Article(req.body);
-
+    let newArticle = req.body;
+    let user = null;
     // find user by id
     const { userId } = req.body;
     if (userId) {
-      User.findOne({ _id: userId }).then(user => {
-        newArticle.userId = user.id;
-      })
-      .catch(() => {
-        res.end("User not found")
-      });
+      try {
+        user = await User.findById(userId);
+      } catch(err) {
+        res.status(500).end("User not found");
+      };
     }
 
-    const articleAdd = Article.collection.insertOne(newArticle, (err, result) => {
-      if (err) res.status(500).end(err);
-      return result;
-    });
-    res.json(articleAdd);
+    try {
+      const articleAdd = await Article.save(newArticle);
+      res.json(articleAdd);
+    } catch(err) {
+      res.status(500).end(err);
+    }
   });
 
   router.get('/:id/user', async (req, res) => {
-    const articleById = await Article.find({ _id: req.params.id }).populate('userId').then(data => data);
-    res.json(articleById);
+    try {
+      const articleById = await Article.findById(req.params.id);
+      res.json(articleById);
+    } catch(err) {
+      res.status(500).end(err);
+    }
   });
 
-  router.delete('/:id', (req, res) => {
-    Article.findByIdAndRemove(req.params.id, article => {
-      res.status(200).end("Article was deleted.");
-    });
+  router.delete('/:id', async (req, res) => {
+    try {
+      await Article.deleteById(req.params.id);
+      res.end("Article was deleted.");
+    } catch (err) {
+      res.status(500).end(err);
+    }
   });
 
-  router.put('/:id', (req, res) => {
-    const articleId = req.params.id;
-    Article.findByIdAndUpdate(articleId, req.body, (article => {
-      res.status(200).end("Article was updated.");
-    }));
+  router.put('/:id', async (req, res) => {
+    try {
+      const articleId = req.params.id;
+      const message = await Article.update(articleId, req.body);
+      res.status(200).end(message);
+    } catch (err) {
+      res.status(500).end(err);
+    }
   });
 
   router.get('/withTagsAndUser', async (req, res) => {
     // user exist and tags size > 0
-    const articles = await Article.find({ userId : { $exists:true }, $where: 'this.tags.length > 0' }).then(data => data);
-    res.json(articles);
+    const articles = await Article.seach('this.tags.length > 0');
+    if (articles.length > 0) {
+      res.json(articles);
+    } else {
+      res.end("Doesn't have articles with user and tags.");
+    }
   })
 
   return router;
