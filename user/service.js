@@ -22,7 +22,7 @@ module.exports = class UserService {
       if (err) {
         throw "User wasn't added.";
       }
-      return user.speak();
+      return user;
     });
   }
 }
