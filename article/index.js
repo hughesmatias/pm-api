@@ -63,7 +63,7 @@ const articleRouter = db => {
 
   router.get('/withTagsAndUser', async (req, res) => {
     // user exist and tags size > 0
-    const articles = await Article.seach('this.tags.length > 0');
+    const articles = await Article.search('this.tags.length > 0');
     if (articles.length > 0) {
       res.json(articles);
     } else {
