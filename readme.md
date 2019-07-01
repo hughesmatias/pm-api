@@ -1,4 +1,4 @@
-# PEER MEDICAL API v.1
+# PM API v.1
 
 ## Use
 
